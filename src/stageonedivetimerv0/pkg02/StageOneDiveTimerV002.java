@@ -41,6 +41,7 @@ public class StageOneDiveTimerV002 {
             } catch (InterruptedException e) {
             }
         }
+        int checkDive = 0;
         while (newstatusManager.getStatus().equals(StatusManager.DIVING)) {
             //Time
             String timeData;
@@ -50,14 +51,18 @@ public class StageOneDiveTimerV002 {
             double doubleDepthData = newDepthGauge.getCurrentDepth();
             String depthData = String.valueOf(doubleDepthData);
             newMainDisplay.setDepthDisplay(depthData);
-            //Log data
-            String diveData = timeData + "," + depthData + "\n";
-            newLogFile.writeFile(diveData);
             //Sleep
             try {
                 Thread.sleep(1000); // Sleep for 1 sec 
             } catch (InterruptedException e) {
             }
+            //Log data
+            if (checkDive >= 10) {
+                String diveData = timeData + "," + depthData + "\n";
+                newLogFile.writeFile(diveData);
+                checkDive = 0;
+            }
+            checkDive++;
         }
         newLogFile.closeFile();
     }
