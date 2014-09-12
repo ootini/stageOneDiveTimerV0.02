@@ -29,11 +29,11 @@ public class StageOneDiveTimerV002 {
 
         //Instantiate the stop watch
         Timer newTimer = new Timer();
-        
+
         //Instantiate logging facility
         LogToFile newLogFile = new LogToFile();
         newLogFile.openFile();
-        
+
         while (newstatusManager.getStatus().equals(StatusManager.NOT_DIVING)) {
             //System.out.println("Waiting");
             try {
@@ -43,20 +43,20 @@ public class StageOneDiveTimerV002 {
         }
         while (newstatusManager.getStatus().equals(StatusManager.DIVING)) {
             //Time
-                String timeData;
-                timeData = newTimer.getTimeElapsed();
-                newMainDisplay.setTimeDisplay(timeData);
+            String timeData;
+            timeData = newTimer.getTimeElapsed();
+            newMainDisplay.setTimeDisplay(timeData);
             //Depth
-                double doubleDepthData = newDepthGauge.getCurrentDepth();
-                String depthData = String.valueOf(doubleDepthData);
-                newMainDisplay.setDepthDisplay(depthData);
+            double doubleDepthData = newDepthGauge.getCurrentDepth();
+            String depthData = String.valueOf(doubleDepthData);
+            newMainDisplay.setDepthDisplay(depthData);
             //Log data
-                String diveData = timeData + "," + depthData + "\n";
-                newLogFile.writeFile(diveData);
+            String diveData = timeData + "," + depthData + "\n";
+            newLogFile.writeFile(diveData);
             //Sleep
-                try {
-                    Thread.sleep(1000); // Sleep for 1 sec 
-                } catch (InterruptedException e) {
+            try {
+                Thread.sleep(1000); // Sleep for 1 sec 
+            } catch (InterruptedException e) {
             }
         }
         newLogFile.closeFile();
